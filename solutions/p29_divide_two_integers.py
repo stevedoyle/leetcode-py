@@ -10,11 +10,8 @@ class Solution(object):
         :rtype: int
         """
 
-        if dividend == -(2**31):
-            if divisor == -1:
-                return 2**31 - 1
-            else:
-                return dividend
+        if dividend == -(2**31) and divisor == -1:
+            return 2**31 - 1
         elif dividend > 2**31 - 1:
             return 2**31 - 1
 
@@ -57,3 +54,9 @@ class TestDivideTwoIntegers:
         divisor = 3
 
         assert Solution().divide(dividend, divisor) == 5
+
+    def test_example5(self):
+        dividend = -2147483648
+        divisor = 2
+
+        assert Solution().divide(dividend, divisor) == -1073741824
