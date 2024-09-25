@@ -8,11 +8,16 @@ from typing import List
 class Solution:
     def sumPrefixScores(self, words: List[str]) -> List[int]:
         scores = []
+        dp = {}
         for word in words:
             prefixes = self.getPrefixes(word)
             score = 0
             for prefix in prefixes:
-                score += self.getPrefixScores(prefix, words)
+                if prefix in dp:
+                    score += dp[prefix]
+                else:
+                    dp[prefix] = self.getPrefixScores(prefix, words)
+                    score += dp[prefix]
             scores.append(score)
         return scores
 
