@@ -8,24 +8,7 @@
 
 from typing import Optional
 
-
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-    def __eq__(self, other):
-        if other is None:
-            return False
-
-        if self.val != other.val:
-            return False
-
-        if self.next is None and other.next is None:
-            return True
-
-        return self.next == other.next
+from utils import ListNode, create_linked_list
 
 
 class Solution:
@@ -45,12 +28,12 @@ class Solution:
 
 class TestDeleteDuplicates:
     def test_example1(self):
-        head = ListNode(1, ListNode(1, ListNode(2)))
-        expected = ListNode(1, ListNode(2))
+        head = create_linked_list([1, 1, 2])
+        expected = create_linked_list([1, 2])
         actual = Solution().deleteDuplicates(head)
         assert actual == expected
 
     def test_example2(self):
-        head = ListNode(1, ListNode(1, ListNode(2, ListNode(3, ListNode(3)))))
-        expected = ListNode(1, ListNode(2, ListNode(3)))
+        head = create_linked_list([1, 1, 2, 3, 3])
+        expected = create_linked_list([1, 2, 3])
         assert Solution().deleteDuplicates(head) == expected

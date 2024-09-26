@@ -3,27 +3,7 @@
 # Difficulty: Hard
 
 from typing import Optional
-
-
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-    def __eq__(self, other):
-        return self.val == other.val and self.next == other.next
-
-
-def list_to_linked_list(lst):
-    if not lst:
-        return None
-    head = ListNode(lst[0])
-    current = head
-    for val in lst[1:]:
-        current.next = ListNode(val)
-        current = current.next
-    return head
+from utils import ListNode, create_linked_list
 
 
 class Solution:
@@ -71,7 +51,7 @@ class Solution:
 
 class TestReverseKGroup:
     def test_example1(self):
-        head = list_to_linked_list([1, 2, 3, 4, 5])
+        head = create_linked_list([1, 2, 3, 4, 5])
         k = 2
-        expected = list_to_linked_list([2, 1, 4, 3, 5])
+        expected = create_linked_list([2, 1, 4, 3, 5])
         assert Solution().reverseKGroup(head, k) == expected

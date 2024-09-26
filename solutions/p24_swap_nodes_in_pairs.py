@@ -21,12 +21,7 @@
 # The number of nodes in the list is in the range [0, 100].
 # 0 <= Node.val <= 100
 
-
-# Definition for singly-linked list.
-class ListNode(object):
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+from utils import ListNode, create_linked_list
 
 
 class Solution(object):
@@ -55,51 +50,41 @@ class Solution(object):
 class TestSwapPairs:
     # Test case 1
     def test_swapPairs_2_groups(self):
-        head = ListNode(1, ListNode(2, ListNode(3, ListNode(4))))
+        head = create_linked_list([1, 2, 3, 4])
+        expected = create_linked_list([2, 1, 4, 3])
         result = Solution().swapPairs(head)
-        assert result.val == 2
-        assert result.next.val == 1
-        assert result.next.next.val == 4
-        assert result.next.next.next.val == 3
-        assert result.next.next.next.next == None
+        assert result == expected
 
     # Test case 2
     def test_swapPairs_empty_list(self):
         head = None
         result = Solution().swapPairs(head)
-        assert result == None
+        assert result is None
 
     # Test case 3
     def test_swapPairs_single_element_list(self):
         head = ListNode(1)
         result = Solution().swapPairs(head)
         assert result.val == 1
-        assert result.next == None
+        assert result.next is None
 
     # Test case 4
     def test_swapPairs_1_pair(self):
-        head = ListNode(1, ListNode(2))
+        head = create_linked_list([1, 2])
+        expected = create_linked_list([2, 1])
         result = Solution().swapPairs(head)
-        assert result.val == 2
-        assert result.next.val == 1
-        assert result.next.next == None
+        assert result == expected
 
     # Test case 5
     def test_swapPairs_incomplete_pair(self):
-        head = ListNode(1, ListNode(2, ListNode(3)))
+        head = create_linked_list([1, 2, 3])
+        expected = create_linked_list([2, 1, 3])
         result = Solution().swapPairs(head)
-        assert result.val == 2
-        assert result.next.val == 1
-        assert result.next.next.val == 3
-        assert result.next.next.next == None
+        assert result == expected
 
     # Test case 6
     def test_swapPairs_incomplete_pair22(self):
-        head = ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5)))))
+        head = create_linked_list([1, 2, 3, 4, 5])
+        expected = create_linked_list([2, 1, 4, 3, 5])
         result = Solution().swapPairs(head)
-        assert result.val == 2
-        assert result.next.val == 1
-        assert result.next.next.val == 4
-        assert result.next.next.next.val == 3
-        assert result.next.next.next.next.val == 5
-        assert result.next.next.next.next.next == None
+        assert result == expected
