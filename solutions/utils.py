@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -84,4 +87,54 @@ class TestNode:
         input = Node(1)
         expected = [[]]
         result = input.to_list()
+        assert result == expected
+
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def to_list(self) -> list:
+        result = []
+        queue = [self]
+        while queue:
+            current = queue.pop(0)
+            if current:
+                result.append(current.val)
+                if current.left or current.right:
+                    queue.append(current.left)
+                    queue.append(current.right)
+            else:
+                result.append(None)
+        return result
+
+
+def create_tree(arr: list) -> Optional[TreeNode]:
+    if not arr:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while i < len(arr):
+        current = queue.pop(0)
+        if arr[i] is not None:
+            current.left = TreeNode(arr[i])
+            queue.append(current.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            current.right = TreeNode(arr[i])
+            queue.append(current.right)
+        i += 1
+    return root
+
+
+class TestTreeNode:
+    def test_create_tree(self):
+        input = [1, 2, 3, None, 4, 5, None]
+        expected = [1, 2, 3, None, 4, 5, None]
+        result = create_tree(input)
+        result = result.to_list() if result else None
         assert result == expected
