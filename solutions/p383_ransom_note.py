@@ -23,7 +23,7 @@ class Solution:
 class TestCanConstruct:
     def test_example1(self):
         ransomNote = "a"
-        magazine = "aa"
+        magazine = "b"
         assert not Solution().canConstruct(ransomNote, magazine)
 
     def test_example2(self):
