@@ -13,18 +13,17 @@ class Solution:
         for c in word[1:]:
             if c == current_c:
                 count += 1
+                if count == 9:
+                    comp += "9" + current_c
+                    count = 0
             else:
-                while count > 0:
-                    chunk = min(count, 9)
-                    comp += str(chunk) + current_c
-                    count -= chunk
+                if count > 0:
+                    comp += str(count) + current_c
                 current_c = c
                 count = 1
 
-        while count > 0:
-            chunk = min(count, 9)
-            comp += str(chunk) + current_c
-            count -= chunk
+        if count > 0:
+            comp += str(count) + current_c
         return comp
 
 
