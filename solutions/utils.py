@@ -10,7 +10,10 @@ class ListNode:
     def __eq__(self, other):
         if not other:
             return False
-        return self.val == other.val and self.next == other.next
+        return self.val == other.val
+
+    def __hash__(self):
+        return id(self)
 
     def to_list(self):
         result = []
