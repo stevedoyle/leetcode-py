@@ -2,23 +2,25 @@
 # URL: https://leetcode.com/problems/word-pattern/
 # Difficulty: Easy
 
+from collections import defaultdict
+
 
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
         words = s.split()
         if len(words) != len(pattern):
             return False
-        map = {}
+        mapping = defaultdict(str)
         seen = set()
 
         for letter, word in zip(pattern, words):
-            if letter in map:
-                if map[letter] != word:
+            if letter in mapping:
+                if mapping[letter] != word:
                     return False
             elif word in seen:
                 return False
             else:
-                map[letter] = word
+                mapping[letter] = word
                 seen.add(word)
 
         return True
