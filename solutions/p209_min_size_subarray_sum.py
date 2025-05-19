@@ -10,7 +10,7 @@ class Solution:
         left = 0
         right = 0
         sum = 0
-        min_length = float("inf")
+        min_length = len(nums) + 1
 
         while right < len(nums):
             sum += nums[right]
@@ -21,7 +21,7 @@ class Solution:
                 sum -= nums[left]
                 left += 1
 
-        return min_length if min_length != float("inf") else 0
+        return min_length if min_length != len(nums) + 1 else 0
 
 
 class TestMinSubArrayLen:
