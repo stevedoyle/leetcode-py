@@ -9,6 +9,30 @@ from utils import ListNode, create_linked_list
 
 class Solution:
     def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        left = head
+        right = head
+
+        for _ in range(1, k):
+            if right:
+                right = right.next
+
+        if not right:
+            return head
+
+        kth_from_start = right
+        right = right.next
+
+        while right:
+            left = left.next
+            right = right.next
+
+        kth_from_end = left
+
+        # Swap the values of the k-th node from the beginning and the k-th node from the end
+        kth_from_start.val, kth_from_end.val = kth_from_end.val, kth_from_start.val
+        return head
+
+    def swapNodesSlow(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         def get_length(node):
             length = 0
             while node:
@@ -41,22 +65,22 @@ class TestSwapNodes:
         head = create_linked_list([1, 2, 3, 4, 5])
         k = 2
         expected = create_linked_list([1, 4, 3, 2, 5])
-        assert Solution().swapNodes(head, k) == expected
+        assert Solution().swapNodes(head, k).to_list() == expected.to_list()
 
     def test_example2(self):
         head = create_linked_list([7, 9, 6, 6, 7, 8, 3, 0, 9, 5])
         k = 5
         expected = create_linked_list([7, 9, 6, 6, 8, 7, 3, 0, 9, 5])
-        assert Solution().swapNodes(head, k) == expected
+        assert Solution().swapNodes(head, k).to_list() == expected.to_list()
 
     def test_example3(self):
         head = create_linked_list([1])
         k = 1
         expected = create_linked_list([1])
-        assert Solution().swapNodes(head, k) == expected
+        assert Solution().swapNodes(head, k).to_list() == expected.to_list()
 
     def test_example4(self):
         head = create_linked_list([1, 2])
         k = 1
         expected = create_linked_list([2, 1])
-        assert Solution().swapNodes(head, k) == expected
+        assert Solution().swapNodes(head, k).to_list() == expected.to_list()
