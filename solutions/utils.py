@@ -100,6 +100,15 @@ class TreeNode:
         self.left = left
         self.right = right
 
+    def to_list_dfs(self) -> list:
+        if not self:
+            return []
+        result = []
+        result.append(self.val)
+        result.extend(self.left.to_list() if self.left else [None])
+        result.extend(self.right.to_list() if self.right else [None])
+        return result
+
     def to_list(self) -> list:
         result = []
         queue = [self]
@@ -107,15 +116,45 @@ class TreeNode:
             current = queue.pop(0)
             if current:
                 result.append(current.val)
-                if current.left or current.right:
+                if current.left:
                     queue.append(current.left)
+                if current.right:
                     queue.append(current.right)
             else:
                 result.append(None)
         return result
 
+    @classmethod
+    def from_list(cls, arr: list) -> Optional["TreeNode"]:
+        # Create a binary tree from a list using level order traversal
+        # where None represents a null node
+        if not arr:
+            return None
+        root = cls(arr[0])
+        queue = [root]
+        i = 1
+        while i < len(arr):
+            current = queue.pop(0)
+            if arr[i] is not None:
+                current.left = cls(arr[i])
+                queue.append(current.left)
+            i += 1
+            if i < len(arr) and arr[i] is not None:
+                current.right = cls(arr[i])
+                queue.append(current.right)
+            i += 1
+        return root
+
 
 def create_tree(arr: list) -> Optional[TreeNode]:
+    # Create a binary tree from a list using level order traversal
+    # where None represents a null node
+    # Example: [1, 2, 3, None, 4, 5, None] represents the following tree:
+    #          1
+    #        /   \
+    #       2     3
+    #        \   /
+    #         4 5
     if not arr:
         return None
     root = TreeNode(arr[0])
@@ -135,9 +174,41 @@ def create_tree(arr: list) -> Optional[TreeNode]:
 
 
 class TestTreeNode:
+    #          1
+    #        /   \
+    #       2     3
+    #        \   /
+    #         4 5
     def test_create_tree(self):
-        input = [1, 2, 3, None, 4, 5, None]
+        data = [1, 2, 3, None, 4, 5, None]
         expected = [1, 2, 3, None, 4, 5, None]
-        result = create_tree(input)
-        result = result.to_list() if result else None
+        expected_dfs = [1, 2, None, 4, 3, 5, None]
+        tree = create_tree(data)
+        result = tree.to_list() if tree else None
         assert result == expected
+        result_dfs = tree.to_list_dfs() if tree else None
+        assert result_dfs == expected_dfs
+
+    #           1
+    #         /   \
+    #        2     3
+    #       / \   / \
+    #      4   5 6   7
+    def test_to_list_dfs(self):
+        data = [1, 2, 3, 4, 5, 6, 7]
+        expected = [1, 2, 4, 5, 3, 6, 7]
+        tree = create_tree(data)
+        result = tree.to_list_dfs() if tree else None
+        assert result == expected
+
+    def test_from_list(self):
+        data = [1, 2, 3, None, 4, 5, None]
+        expected = [1, 2, 3, None, 4, 5, None]
+        tree = TreeNode.from_list(data)
+        result = tree.to_list() if tree else None
+        assert result == expected
+
+    def test_from_empty_list(self):
+        data = []
+        tree = TreeNode.from_list(data)
+        assert tree is None
