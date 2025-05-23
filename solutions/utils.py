@@ -23,6 +23,17 @@ class ListNode:
             current = current.next
         return result
 
+    @classmethod
+    def from_list(cls, arr):
+        if not arr:
+            return None
+        head = cls(arr[0])
+        current = head
+        for i in range(1, len(arr)):
+            current.next = cls(arr[i])
+            current = current.next
+        return head
+
 
 def create_linked_list(arr):
     if not arr:
